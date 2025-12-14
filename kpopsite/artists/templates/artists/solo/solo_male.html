@@ -1,0 +1,79 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Solo Male | K-POP+
+{% endblock %}
+
+{% block content %}
+    <!-- SOLO MALE -->
+    <div id="content_solo_male_page">
+        <div class="groups_main_title">
+            <h1>SOLO MALE</h1>
+        </div>
+
+        <!-- BREADCRUMBS -->
+        <nav class="breadcrumbs">
+            <ul class="breadcrumbs_list">
+                <li class="breadcrumbs_item">
+                    <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <a href="{% url 'artists_home' %}" class="breadcrumbs_link">Artists</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <span class="breadcrumbs_current">Solo Male</span>
+                </li>
+            </ul>
+        </nav>
+        <div class="search_hint">
+            <p>Use <kbd>Ctrl</kbd> + <kbd>F</kbd> to search for a specific artist</p>
+        </div>
+
+        <!-- SOLO MAIN -->
+        <div class="groups_content_wrapper">
+            <div class="groups_alphabetical_list">
+                {% if groups_by_letter %}
+                    {% for letter, artists in groups_by_letter.items %}
+                        <div class="letter_section" id="letter-{{ letter }}">
+                            <div class="letter_header">
+                                <h2>{{ letter }}</h2>
+                                <span class="letter_line"></span>
+                            </div>
+
+                            <div class="artists_grid">
+                                {% for artist in artists %}
+                                    <a href="{% url 'solo_info' artist.slug %}" class="artist_card">
+                                        <div class="artist_photo_container">
+                                            <img src="{{ artist.photo.url }}" alt="{{ artist.stage_name }}" class="artist_photo">
+                                        </div>
+                                        <p class="artist_name">{{ artist.stage_name }}</p>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No solo male artists available</p>
+                {% endif %}
+            </div>
+
+            <!-- INDEX -->
+            <div class="alphabetical_index">
+                <div class="index_title">INDEX</div>
+                <div class="index_letters">
+                    {% if available_letters %}
+                        {% for letter in available_letters %}
+                            <a href="#letter-{{ letter }}" class="index_letter" data-letter="{{ letter }}">{{ letter }}</a>
+                        {% endfor %}
+                    {% else %}
+                        {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+                            <span class="index_letter disabled">{{ letter }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

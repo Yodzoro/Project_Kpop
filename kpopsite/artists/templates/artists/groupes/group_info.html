@@ -1,0 +1,151 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+   {{ group.name }} | K-POP+
+{% endblock %}
+
+{% block content %}
+    <!-- BREADCRUMBS -->
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs_list">
+            <li class="breadcrumbs_item">
+                <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                <a href="{% url 'artists_home' %}" class="breadcrumbs_link">Artists</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                {% if group.gender == 'male' %}
+                    <a href="{% url 'groups_boys' %}" class="breadcrumbs_link">Boys Groups</a>
+                {% elif group.gender == 'female' %}
+                    <a href="{% url 'groups_girls' %}" class="breadcrumbs_link">Girls Groups</a>
+                {% else %}
+                    <a href="{% url 'groups_mix' %}" class="breadcrumbs_link">Mixed Groups</a>
+                {% endif %}
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                <span class="breadcrumbs_current">{{ group.name }}</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- GROUP + MEMBERS -->
+    <div id="content_group_info_page">
+
+        <!-- GROUP INFO -->
+        <div class="group_info_section">
+            <div class="group_visuals">
+                <div class="group_photo_container">
+                    <img src="{{ group.photo.url }}" alt="{{ group.name }}" class="group_photo">
+                </div>
+                <div class="group_logo_container">
+                    <img src="{{ group.logo.url }}" alt="{{ group.name }} logo" class="group_logo">
+                </div>
+            </div>
+            <div class="group_text_info">
+                <h1 class="group_name">{{ group.name }}</h1>
+                
+                <div class="info_item">
+                    <span class="info_label">Debut:</span>
+                    <span class="info_value">{{ group.date_debut|date:"d/m/Y" }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Company:</span>
+                    <span class="info_value">{{ group.company.name }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Fandom:</span>
+                    <span class="info_value">{{ group.fandom_name }}</span>
+                </div>
+
+                {% if group.slogan %}
+                <div class="info_item">
+                    <span class="info_label">Slogan:</span>
+                    <span class="info_value">"{{ group.slogan }}"</span>
+                </div>
+                {% endif %}
+
+                <div class="info_item">
+                    <span class="info_label">Members:</span>
+                    <span class="info_value">{{ members.count }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEMBERS -->
+        <div class="members_section">
+            <div class="members_header">
+                <h2>MEMBERS</h2>
+                <span class="members_line"></span>
+            </div>
+            <div class="members_list">
+                {% if members %}
+                    {% for member in members %}
+
+                        <!-- MEMBER INFO -->
+                        <div class="member_card {% cycle 'photo-right' 'photo-left' %}">
+                            <div class="member_photo_container">
+                                <img src="{{ member.photo.url }}" alt="{{ member.stage_name }}" class="member_photo">
+                            </div>
+                            <div class="member_info">
+                                <h3 class="member_stage_name">{{ member.stage_name }}</h3>
+                                
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Birth Name:</span>
+                                    <span class="member_info_value">{{ member.prenom }} {{ member.nom }}</span>
+                                </div>
+
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Birthday:</span>
+                                    <span class="member_info_value">{{ member.date_age|date:"d/m/Y" }}</span>
+                                </div>
+
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Nationality:</span>
+                                    <span class="member_info_value">{{ member.nationality }}</span>
+                                </div>
+
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Birthplace:</span>
+                                    <span class="member_info_value">{{ member.birthplace }}</span>
+                                </div>
+
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Position:</span>
+                                    <span class="member_info_value">{{ member.position }}</span>
+                                </div>
+
+                                {% if member.unit %}
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Unit:</span>
+                                    <span class="member_info_value">{{ member.unit }}</span>
+                                </div>
+                                {% endif %}
+
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Zodiac Sign:</span>
+                                    <span class="member_info_value">{{ member.zodiac_sign }}</span>
+                                </div>
+
+                                {% if member.fun_facts %}
+                                <div class="member_info_item fun_facts">
+                                    <span class="member_info_label">Fun Facts:</span>
+                                    <span class="member_info_value">{{ member.fun_facts|linebreaks }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_members">No members information available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

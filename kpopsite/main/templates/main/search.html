@@ -1,0 +1,188 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Search | K-POP+
+{% endblock %}
+
+{% block content %}
+
+    <div class="search_page_header">
+        <h1 class="search_page_title">SEARCH</h1>
+
+        <!-- BREADCRUMBS -->
+        <nav class="breadcrumbs">
+            <ul class="breadcrumbs_list">
+                <li class="breadcrumbs_item">
+                    <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <span class="breadcrumbs_current">Search</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search_controls_section">
+
+        <!-- SEARCH BAR -->
+        <div class="search_bar_container">
+            <form method="GET" action="{% url 'search' %}" class="search_form">
+                <!-- name="q" -> search/?q= -->
+                <input
+                    type="text"
+                    name="q"
+                    class="search_input"
+                    placeholder="Recherche..."
+                    value="{{ query }}"
+                    required
+                />
+                <button type="submit" class="search_submit_btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- SEARCH FILTRES -->
+        <div class="search_filters_container">
+            <form method="GET" action="{% url 'search' %}" class="filters_form">
+                <input type="hidden" name="q" value="{{ query }}">
+
+                <!-- FILTRES MAIN -->
+                <div class="filter_group">
+                    <label class="filter_label">Content Type:</label>
+                    <select name="content_type" class="filter_select">
+                        <option value="">All</option>
+                        <option value="artists" {% if content_type == 'artists' %}selected{% endif %}>Artists</option>
+                        <option value="news" {% if content_type == 'news' %}selected{% endif %}>News</option>
+                    </select>
+                </div>
+
+                <!-- FILTRES ARTISTS -->
+                <div class="filter_group">
+                    <label class="filter_label">Artist Tags:</label>
+                    <div class="filter_checkboxes">
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="artist_tags" value="male" {% if 'male' in artist_tags %}checked{% endif %}>
+                            <span>Boy Groups</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="artist_tags" value="female" {% if 'female' in artist_tags %}checked{% endif %}>
+                            <span>Girl Groups</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="artist_tags" value="mixed" {% if 'mixed' in artist_tags %}checked{% endif %}>
+                            <span>Mixed Groups</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="artist_tags" value="solo_m" {% if 'solo_m' in artist_tags %}checked{% endif %}>
+                            <span>Solo Male</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="artist_tags" value="solo_f" {% if 'solo_f' in artist_tags %}checked{% endif %}>
+                            <span>Solo Female</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- FILTRES NEWS -->
+                <div class="filter_group">
+                    <label class="filter_label">News Tags:</label>
+                    <div class="filter_checkboxes">
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="news_tags" value="boy_group" {% if 'boy_group' in news_tags %}checked{% endif %}>
+                            <span>Boy Group</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="news_tags" value="girl_group" {% if 'girl_group' in news_tags %}checked{% endif %}>
+                            <span>Girl Group</span>
+                        </label>
+                        <label class="checkbox_label">
+                            <input type="checkbox" name="news_tags" value="solo" {% if 'solo' in news_tags %}checked{% endif %}>
+                            <span>Solo</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="filters_apply_btn">Apply Filters</button>
+            </form>
+            <p class="filter_note">* Utilisez Artist Tags pour rechercher des artistes et News Tags pour rechercher des actualités. L'utilisation des deux peut ne donner aucun résultat.</p>
+        </div>
+
+    </div>
+
+    <!-- RESULTATS -->
+    <div class="search_results_section">
+        <h2 class="results_title">RESULTS</h2>
+        {% if query %}
+            {% if no_results %}
+                <p class="no_results_message">Il n'y a pas des résultats pour "{{ query }}"</p>
+            {% else %}
+
+                <!-- RESULTATS ARTISTS -->
+                {% if artists_results and content_type != 'news' %}
+                <div class="results_category">
+                    <div class="results_category_header">
+                        <h3>ARTISTS</h3>
+                        <span class="results_line"></span>
+                    </div>
+                    <div class="results_grid">
+                        {% for artist in artists_results %}
+                            {% if artist.type == 'group' %}
+                                <a href="{% url 'group_info' artist.slug %}" class="result_card">
+                                    <div class="result_photo_container">
+                                        <img src="{{ artist.photo.url }}" alt="{{ artist.name }}" class="result_photo">
+                                    </div>
+                                    <p class="result_name">{{ artist.name }}</p>
+                                    <span class="result_type">{{ artist.gender_display }}</span>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'solo_info' artist.slug %}" class="result_card">
+                                    <div class="result_photo_container">
+                                        <img src="{{ artist.photo.url }}" alt="{{ artist.name }}" class="result_photo">
+                                    </div>
+                                    <p class="result_name">{{ artist.name }}</p>
+                                    <span class="result_type">Solo Artist</span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- RESULTATS NEWS -->
+                {% if news_results and content_type != 'artists' %}
+                <div class="results_category">
+                    <div class="results_category_header">
+                        <h3>NEWS</h3>
+                        <span class="results_line"></span>
+                    </div>
+                    <div class="results_grid">
+                        {% for article in news_results %}
+                            <a href="{% url 'news_page' article.id %}" class="result_card">
+                                <div class="result_photo_container">
+                                    <img src="{{ article.cover.url }}" alt="{{ article.title }}" class="result_photo">
+                                    <span class="result_tag {{ article.tag }}">
+                                        {% if article.tag == 'boy_group' %}
+                                            BOY GROUP
+                                        {% elif article.tag == 'girl_group' %}
+                                            GIRL GROUP
+                                        {% elif article.tag == 'solo' %}
+                                            SOLO
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <p class="result_name">{{ article.title }}</p>
+                                <span class="result_date">{{ article.date_pub|date:"d/m/Y" }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <p class="no_search_message">Commencez la recherche pour voir les résultats...</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

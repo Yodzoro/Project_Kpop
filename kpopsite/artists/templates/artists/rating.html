@@ -1,0 +1,88 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Rating | K-POP+
+{% endblock %}
+
+{% block content %}
+    <!-- RATING -->
+    <div id="rating_page">
+        <div class="rating_page_title">
+            <h1>Rating artists</h1>
+        </div>
+
+        <!-- BREADCRUMBS -->
+        <nav class="breadcrumbs">
+            <ul class="breadcrumbs_list">
+                <li class="breadcrumbs_item">
+                    <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <span class="breadcrumbs_current">Artists Rating</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- RATING MAIN -->
+        <div class="rating_page_content">
+            <div class="rating_page_header">
+                <h2>Artists rating for {{ latest_month }} {{ latest_year }}</h2>
+                <p class="rating_description">This rating is based on KOMCA (Korea Music Copyright Association) data</p>
+            </div>
+            <div class="rating_page_categories_wrapper">
+
+                <!-- RATING MALE -->
+                <div class="rating_page_category">
+                    <div class="rating_page_category_header">
+                        <h3>BOYS GROUPS</h3>
+                        <span class="rating_page_line"></span>
+                    </div>
+                    <div class="rating_page_list">
+                        {% if boys_groups %}
+                            {% for rating in boys_groups %}
+                                <a href="{% url 'group_info' rating.group.slug %}" class="rating_page_item">
+                                    <span class="rating_page_number">{{ forloop.counter }}</span>
+                                    <div class="rating_page_artist_card">
+                                        <img src="{{ rating.group.photo.url }}" alt="{{ rating.group.name }}" class="rating_page_artist_photo">
+                                        <div class="rating_page_artist_info">
+                                            <h4 class="rating_page_artist_name">{{ rating.group.name }}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            <p class="rating_page_no_data">Aucune donnée de rating disponible...</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- RATING GIRLS -->
+                <div class="rating_page_category">
+                    <div class="rating_page_category_header">
+                        <h3>GIRLS GROUPS</h3>
+                        <span class="rating_page_line"></span>
+                    </div>
+                    <div class="rating_page_list">
+                        {% if girls_groups %}
+                            {% for rating in girls_groups %}
+                                <a href="{% url 'group_info' rating.group.slug %}" class="rating_page_item">
+                                    <span class="rating_page_number">{{ forloop.counter }}</span>
+                                    <div class="rating_page_artist_card">
+                                        <img src="{{ rating.group.photo.url }}" alt="{{ rating.group.name }}" class="rating_page_artist_photo">
+                                        <div class="rating_page_artist_info">
+                                            <h4 class="rating_page_artist_name">{{ rating.group.name }}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            <p class="rating_page_no_data">Aucune donnée de rating disponible...</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

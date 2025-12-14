@@ -1,0 +1,189 @@
+<!-- La structure ressemble à la division dans php avec header, index, footer -->
+
+<!-- Connexion des documents css, js, img, etc. -->
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} {% endblock %}</title>
+
+    <!-- Сonnexion à bootstrap, qui contient des modèles pour les sites web (icones) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.0.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'artists/css/artists.css' %}">
+    <link rel="stylesheet" href="{% static 'artists/css/rating.css' %}">
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'main/js/menu.js' %}"></script>
+    <script src="{% static 'main/js/slider.js' %}"></script>
+    <script src="{% static 'main/js/calendar.js' %}"></script>
+
+    <!-- FONT №1 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+
+    <!-- FONT №2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- Logo pour l'onglet du navigateur -->
+    <link rel="icon" type="image/png" href="{% static 'main/img/logo_kpop.png' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}"> <!-- class pour fixer la couleur blanche des éléments uniquement sur la page d'accueil-->
+
+     <!--HEADER-->
+     <div class="generalB">
+
+         <!--HEADER CLOSE-->
+         <div class="header">
+             <div class="header__logo"><a href="{%  url 'home' %}">K-POP+</a></div>
+            <div class="header_menu">
+                 <button class = "open_menu" type="buttom" onclick="openMenu()" ><p>MENU</p></button>
+             </div>
+         </div>
+
+        <!--HEADER OPEN-->
+        <nav id="myNavigation" class="navigation" style="height: 0px;">
+            <div class="generalB">
+                <div class="header">
+                <div class="header__logo"> <a href="{%  url 'home' %}">K-POP+</a></div>
+                    <button class="close_menu" type="buttom" onclick="closeMenu()">
+                       <p>✕</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RECHERCHE -->
+            <div class="menu_content">
+                <div class="header__search">
+                    <a href="{% url 'search' %}" class="search__link">Search</a>
+                    <form method="GET" action="{% url 'search' %}" class="header_search_form">
+                        <input type="text" name="q" class="search__input" placeholder="type your research" />
+                        <button type="submit" class="search__btn">
+                            <i class="fa-solid fa-magnifying-glass" style="color:white;"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- MENU -->
+                <div class="header__menu">
+                    <div class="menu__box">
+                        <h3><a href="{%  url 'home' %}">K-POP+</a></h3>
+                        <ul>
+                            <li><a href="{% url 'under_construction' %}">About Us</a></li>
+                            <li><a href="{% url 'under_construction' %}">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="menu__box">
+                        <h3><a>GUID</a></h3>
+                        <ul>
+                            <li><a href="{% url 'under_construction' %}">What is K-Pop?</a></li>
+                            <li><a href="{% url 'under_construction' %}">About the community</a></li>
+                            <li><a href="{% url 'under_construction' %}">Comebacks</a></li>
+                            <li><a href="{% url 'under_construction' %}">Terms</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="menu__box">
+                        <h3><a href="{%  url 'artists_home' %}">ARTISTS</a></h3>
+                        <ul>
+                            <li><p>Groups</p>
+                                <ul class="under_ul">
+                                    <li><a href="{%  url 'groups_boys' %}">- Boys</a></li>
+                                    <li><a href="{%  url 'groups_girls' %}">- Girls</a></li>
+                                    <li><a href="{%  url 'groups_mix' %}">- Mix</a></li>
+                                </ul>
+                            </li>
+                            <li><p>Solo</p>
+                                <ul class="under_ul">
+                                    <li><a href="{%  url 'solo_m' %}">- Men</a></li>
+                                    <li><a href="{%  url 'solo_f' %}">- Women</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{%  url 'rating' %}">Rating</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu__box">
+                        <h3><a href="{% url 'under_construction' %}">QUIZZES</a></h3>
+                    </div>
+                    <div class="menu__box">
+                        <h3><a href="{%  url 'news_home' %}">NEWS</a></h3>
+                    </div>
+                </div>
+            </div>
+        </nav>
+     </div>
+
+
+    <main>
+        {% block content %}
+        <!--
+        Le générateur de modèles Jinja, afin de ne pas répéter la structure html.
+        Cette commande demande d'afficher le contenu d'autres pages. La commande suivante ferme cette requête
+        -->
+        {% endblock %}
+    </main>
+
+     <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer_content">
+
+            <!-- LOGO + RESEAUX SOCIAUX -->
+            <div class="footer_section footer_social">
+                <h2 class="footer_logo"><a href="{%  url 'home' %}">K-POP+</a></h2>
+                <p class="footer_social_title">OUR SOCIAL MEDIA</p>
+                <div class="footer_social_icons">
+                    <a href="#" class="social_icon"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="#" class="social_icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social_icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social_icon"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- DOCUMENTATION -->
+            <div class="footer_section footer_links">
+                <ul>
+                    <li><a href="{% url 'under_construction' %}">PRIVACY POLICY</a></li>
+                    <li><a href="{% url 'under_construction' %}">LEGAL NOTICE</a></li>
+                    <li><a href="{% url 'under_construction' %}">COOKIE POLICY</a></li>
+                    <li><a href="{% url 'under_construction' %}">SITE PLAN</a></li>
+                </ul>
+            </div>
+
+            <!-- NEWSLETTERS -->
+            <div class="footer_section footer_newsletter">
+                <h3 class="newsletter_title">NEWSLETTER</h3>
+                <p class="newsletter_description">Want to stay up to date with the latest updates? Subscribe to our newsletter.</p>
+                <div class="newsletter_form">
+                    <input type="email" placeholder="E-mail" class="newsletter_input">
+                    <button class="newsletter_btn">Send</button>
+                </div>
+                <label class="newsletter_checkbox">
+                    <input type="checkbox">
+                    <span>I have read the terms of the <a href="{% url 'under_construction' %}">privacy policy</a></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- COPYRIGHT -->
+        <div class="footer_copyright">
+            <p>© 2025 K-POP+</p>
+        </div>
+    </div>
+</body>
+</html>

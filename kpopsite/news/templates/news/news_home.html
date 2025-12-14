@@ -1,0 +1,106 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    News | K-POP+
+{% endblock %}
+
+{% block content %}
+
+    <!-- NEWS ACCUEIL -->
+    <div id="content_news_home_page">
+        <!-- NEWS TITRE -->
+        <div class="news_main_title">
+            <h1>NEWS</h1>
+        </div>
+
+        <!-- BREADCRUMBS -->
+        <nav class="breadcrumbs">
+            <ul class="breadcrumbs_list">
+                <li class="breadcrumbs_item">
+                    <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <span class="breadcrumbs_current">News</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- NEWS MAIN -->
+        <div class="news_content_wrapper">
+
+            <!-- NEWS ARTICLES -->
+            <div class="news_grid_container">
+                {% if news %}
+                    <div class="news_grid">
+                        {% for article in news %}
+                            <a href="{% url 'news_page' article.id %}" class="news_card">
+                                <div class="news_cover_container">
+                                    <img src="{{ article.cover.url }}" alt="{{ article.title }}" class="news_cover">
+                                    <div class="news_overlay">
+                                        <span class="news_tag">
+                                            {% if article.tag == 'boy_group' %}
+                                                BOY GROUP
+                                            {% elif article.tag == 'girl_group' %}
+                                                GIRL GROUP
+                                            {% elif article.tag == 'solo' %}
+                                                SOLO
+                                            {% endif %}
+                                        </span>
+                                        <h4 class="news_title">{{ article.title }}</h4>
+                                        <p class="news_preview">{{ article.preview }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="no_news">Pour l'instant, il n'y a pas d'actualités... Attendez qu'elles soient ajoutées ! :)</p>
+                {% endif %}
+            </div>
+
+            <!-- NEWS FILTRES -->
+            <div class="news_filters">
+                <div class="filters_title">FILTERS</div>
+
+                <!-- FILTRE PAR TAG -->
+                <div class="filter_section">
+                    <h3 class="filter_header">Category</h3>
+                    <div class="filter_options">
+                        <a href="?{% if sort_order %}sort={{ sort_order }}{% endif %}"
+                           class="filter_option {% if not selected_tag %}active{% endif %}">
+                            All
+                        </a>
+                        <a href="?tag=boy_group{% if sort_order %}&sort={{ sort_order }}{% endif %}"
+                           class="filter_option {% if selected_tag == 'boy_group' %}active{% endif %}">
+                            Boy Groups
+                        </a>
+                        <a href="?tag=girl_group{% if sort_order %}&sort={{ sort_order }}{% endif %}"
+                           class="filter_option {% if selected_tag == 'girl_group' %}active{% endif %}">
+                            Girl Groups
+                        </a>
+                        <a href="?tag=solo{% if sort_order %}&sort={{ sort_order }}{% endif %}"
+                           class="filter_option {% if selected_tag == 'solo' %}active{% endif %}">
+                            Solo Artists
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FILTRE PAR DATE -->
+                <div class="filter_section">
+                    <h3 class="filter_header">Sort by Date</h3>
+                    <div class="filter_options">
+                        <a href="?sort=latest{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                           class="filter_option {% if sort_order == 'latest' or not sort_order %}active{% endif %}">
+                            Latest First
+                        </a>
+                        <a href="?sort=oldest{% if selected_tag %}&tag={{ selected_tag }}{% endif %}"
+                           class="filter_option {% if sort_order == 'oldest' %}active{% endif %}">
+                            Oldest First
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

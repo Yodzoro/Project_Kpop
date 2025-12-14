@@ -1,0 +1,169 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+   Artists | K-POP+
+{% endblock %}
+
+{% block content %}
+
+    <div id="content_artists_page">
+
+        <!-- Заглавие страницы -->
+        <div class="artists_main_title">
+            <h1>ARTISTS</h1>
+        </div>
+
+        <nav class="breadcrumbs">
+            <ul class="breadcrumbs_list">
+                <li class="breadcrumbs_item">
+                    <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+                </li>
+                <li class="breadcrumbs_item">
+                    <span class="breadcrumbs_separator">|</span>
+                    <a href="{% url 'artists_home' %}" class="breadcrumbs_link">Artists</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- BOYS GROUPS -->
+        <div class="artists_category_section">
+            <div class="artists_category_header">
+                <h2>Boys Groups</h2>
+                <span class="artists_header_line"></span>
+            </div>
+
+            <div class="artists_grid">
+                {% if boys_groups %}
+                    {% for group in boys_groups %}
+                        <a href="{% url 'group_info' group.slug %}" class="artist_card">
+                            <div class="artist_photo_container">
+                                <img src="{{ group.photo.url }}" alt="{{ group.name }}" class="artist_photo">
+                            </div>
+                            <p class="artist_name">{{ group.name }}</p>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No boys groups available</p>
+                {% endif %}
+            </div>
+
+            <div class="artists_footer">
+                <span class="artists_footer_line"></span>
+                <a href="{% url 'groups_boys' %}" class="artists_see_more_btn">See more ></a>
+            </div>
+        </div>
+
+        <!-- GIRLS GROUPS -->
+        <div class="artists_category_section">
+            <div class="artists_category_header">
+                <h2>Girls Groups</h2>
+                <span class="artists_header_line"></span>
+            </div>
+
+            <div class="artists_grid">
+                {% if girls_groups %}
+                    {% for group in girls_groups %}
+                        <a href="{% url 'group_info' group.slug %}" class="artist_card">
+                            <div class="artist_photo_container">
+                                <img src="{{ group.photo.url }}" alt="{{ group.name }}" class="artist_photo">
+                            </div>
+                            <p class="artist_name">{{ group.name }}</p>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No girls groups available</p>
+                {% endif %}
+            </div>
+
+            <div class="artists_footer">
+                <span class="artists_footer_line"></span>
+                <a href="{% url 'groups_girls' %}" class="artists_see_more_btn">See more ></a>
+            </div>
+        </div>
+
+        <!-- MIXED GROUPS -->
+        <div class="artists_category_section">
+            <div class="artists_category_header">
+                <h2>Mixed Groups</h2>
+                <span class="artists_header_line"></span>
+            </div>
+
+            <div class="artists_grid">
+                {% if mixed_groups %}
+                    {% for group in mixed_groups %}
+                        <a href="{% url 'group_info' group.slug %}" class="artist_card">
+                            <div class="artist_photo_container">
+                                <img src="{{ group.photo.url }}" alt="{{ group.name }}" class="artist_photo">
+                            </div>
+                            <p class="artist_name">{{ group.name }}</p>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No mixed groups available</p>
+                {% endif %}
+            </div>
+
+            <div class="artists_footer">
+                <span class="artists_footer_line"></span>
+                <a href="{% url 'groups_mix' %}" class="artists_see_more_btn">See more ></a>
+            </div>
+        </div>
+
+        <!-- SOLO MALE -->
+        <div class="artists_category_section">
+            <div class="artists_category_header">
+                <h2>Solo Male</h2>
+                <span class="artists_header_line"></span>
+            </div>
+
+            <div class="artists_grid">
+                {% if solo_male %}
+                    {% for artist in solo_male %}
+                        <a href="{% url 'solo_info' artist.slug %}" class="artist_card">
+                            <div class="artist_photo_container">
+                                <img src="{{ artist.photo.url }}" alt="{{ artist.stage_name }}" class="artist_photo">
+                            </div>
+                            <p class="artist_name">{{ artist.stage_name }}</p>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No solo male artists available</p>
+                {% endif %}
+            </div>
+
+            <div class="artists_footer">
+                <span class="artists_footer_line"></span>
+                <a href="{% url 'solo_m' %}" class="artists_see_more_btn">See more ></a>
+            </div>
+        </div>
+
+        <!-- SOLO FEMALE -->
+        <div class="artists_category_section">
+            <div class="artists_category_header">
+                <h2>Solo Female</h2>
+                <span class="artists_header_line"></span>
+            </div>
+
+            <div class="artists_grid">
+                {% if solo_female %}
+                    {% for artist in solo_female %}
+                        <a href="{% url 'solo_info' artist.slug %}" class="artist_card">
+                            <div class="artist_photo_container">
+                                <img src="{{ artist.photo.url }}" alt="{{ artist.stage_name }}" class="artist_photo">
+                            </div>
+                            <p class="artist_name">{{ artist.stage_name }}</p>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="no_artists">No solo female artists available</p>
+                {% endif %}
+            </div>
+
+            <div class="artists_footer">
+                <span class="artists_footer_line"></span>
+                <a href="{% url 'solo_f' %}" class="artists_see_more_btn">See more ></a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

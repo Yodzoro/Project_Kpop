@@ -1,0 +1,92 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+   {{ artist.stage_name }} | K-POP+
+{% endblock %}
+
+{% block content %}
+    <!-- BREADCRUMBS -->
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs_list">
+            <li class="breadcrumbs_item">
+                <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                <a href="{% url 'artists_home' %}" class="breadcrumbs_link">Artists</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                {% if artist.gender == 'm' %}
+                    <a href="{% url 'solo_m' %}" class="breadcrumbs_link">Solo Male</a>
+                {% else %}
+                    <a href="{% url 'solo_f' %}" class="breadcrumbs_link">Solo Female</a>
+                {% endif %}
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">/</span>
+                <span class="breadcrumbs_current">{{ artist.stage_name }}</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- SOLO INFO -->
+    <div id="content_solo_info_page">
+        <div class="solo_info_section">
+            <div class="solo_visuals">
+                <div class="solo_photo_container">
+                    <img src="{{ artist.photo.url }}" alt="{{ artist.stage_name }}" class="solo_photo">
+                </div>
+            </div>
+            <div class="solo_text_info">
+                <h1 class="solo_name">{{ artist.stage_name }}</h1>
+                <div class="info_item">
+                    <span class="info_label">Birth Name:</span>
+                    <span class="info_value">{{ artist.prenom }} {{ artist.nom }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Birthday:</span>
+                    <span class="info_value">{{ artist.date_age|date:"d/m/Y" }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Nationality:</span>
+                    <span class="info_value">{{ artist.nationality }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Birthplace:</span>
+                    <span class="info_value">{{ artist.birthplace }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Zodiac Sign:</span>
+                    <span class="info_value">{{ artist.zodiac_sign }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Solo Debut:</span>
+                    <span class="info_value">{{ artist.date_debut|date:"d/m/Y" }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Company:</span>
+                    <span class="info_value">{{ artist.company.name }}</span>
+                </div>
+
+                <div class="info_item">
+                    <span class="info_label">Fandom:</span>
+                    <span class="info_value">{{ artist.fandom_name }}</span>
+                </div>
+
+                {% if artist.fun_facts %}
+                <div class="info_item fun_facts">
+                    <span class="info_label">Fun Facts:</span>
+                    <span class="info_value">{{ artist.fun_facts|linebreaks }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

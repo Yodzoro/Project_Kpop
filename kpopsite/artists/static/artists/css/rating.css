@@ -1,0 +1,192 @@
+/* RATING PAGE */
+#rating_page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 60px 40px;
+}
+
+.rating_page_title {
+    text-align: center;
+}
+
+.rating_page_title h1 {
+    font-family: 'Body Text Large Regular', sans-serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: 8px;
+    margin: 0;
+}
+
+.rating_page_content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.rating_page_header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.rating_page_header h2 {
+    font-family: 'Zalando Sans SemiExpanded', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    color: #111111;
+    margin: 15px 0 15px 0;
+}
+
+.rating_description {
+    font-family: 'Zalando Sans SemiExpanded', cursive;
+    font-size: clamp(14px, 2vw, 18px);
+    font-style: italic;
+    color: #666;
+    margin: 0;
+}
+
+.rating_page_categories_wrapper {
+    display: flex;
+    gap: 60px;
+    margin-top: 60px;
+}
+
+.rating_page_category {
+    flex: 1;
+}
+
+.rating_page_category_header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.rating_page_category_header h3 {
+    font-family: 'Zalando Sans SemiExpanded', cursive;
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 600;
+    color: #111111;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.rating_page_line {
+    flex: 1;
+    height: 2px;
+    background-color: #111111;
+}
+
+.rating_page_list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.rating_page_item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.rating_page_number {
+    font-family: 'Zalando Sans SemiExpanded', cursive;
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 700;
+    color: #111111;
+    text-align: center;
+    min-width: 80px;
+}
+
+.rating_page_artist_card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    padding: 15px;
+}
+
+.rating_page_artist_photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.rating_page_artist_info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rating_page_artist_name {
+    font-family: 'Body Text Large Regular', sans-serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 600;
+    color: #111111;
+    margin: 0;
+}
+
+.rating_page_no_data {
+    font-size: 18px;
+    text-align: center;
+    color: #666;
+    padding: 40px;
+}
+
+/* VERSIONS TABLETTES */
+@media (max-width: 1024px) {
+    #rating_page {
+        padding: 40px 30px;
+    }
+
+    .rating_page_categories_wrapper {
+        gap: 40px;
+    }
+
+    .rating_page_number {
+        font-size: 48px;
+        min-width: 60px;
+    }
+
+    .rating_page_artist_photo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* VERSIONS MOBILES */
+@media (max-width: 768px) {
+    #rating_page {
+        padding: 30px 20px;
+    }
+
+    .rating_page_title {
+        margin-bottom: 40px;
+    }
+
+    .rating_page_title h1 {
+        font-size: 48px;
+        letter-spacing: 4px;
+    }
+
+    .rating_page_categories_wrapper {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .rating_page_number {
+        font-size: 36px;
+        min-width: 50px;
+    }
+
+    .rating_page_artist_card {
+        padding: 12px;
+        gap: 15px;
+    }
+
+    .rating_page_artist_photo {
+        width: 80px;
+        height: 80px;
+    }
+}

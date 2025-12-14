@@ -1,0 +1,93 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+   {{ article.title }} | K-POP+
+{% endblock %}
+
+{% block content %}
+
+    <!-- BREADCRUMBS -->
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs_list">
+            <li class="breadcrumbs_item">
+                <a href="{% url 'home' %}" class="breadcrumbs_link">Home</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                <a href="{% url 'news_home' %}" class="breadcrumbs_link">News</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <span class="breadcrumbs_separator">|</span>
+                <!-- "truncatewords:5" pour montrer uniquement une partie de titre et pas tout-->
+                <span class="breadcrumbs_current">{{ article.title|truncatewords:5 }}</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ARTICLE MAIN -->
+    <div id="content_news_page_detail">
+        <div class="news_page_wrapper">
+
+            <!-- ARTICLE -->
+            <article class="news_article">
+                <h1 class="article_title">{{ article.title }}</h1>
+                <div class="article_meta">
+                    <span class="article_date">{{ article.date_pub|date:"d F Y" }}</span>
+                    {% if article.author %}
+                        <span class="article_author">by {{ article.author.nickname }}</span>
+                    {% endif %}
+                    <!-- Тег категории -->
+                    <span class="article_tag {{ article.tag }}">
+                        {% if article.tag == 'boy_group' %}
+                            BOY GROUP
+                        {% elif article.tag == 'girl_group' %}
+                            GIRL GROUP
+                        {% elif article.tag == 'solo' %}
+                            SOLO
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="article_cover_container">
+                    <img src="{{ article.cover.url }}" alt="{{ article.title }}" class="article_cover">
+                </div>
+                <div class="article_text">
+                    {{ article.full_text|linebreaks }}
+                </div>
+            </article>
+
+            <!-- ARTICLE RECOMENDATIONS -->
+            <aside class="recommendations_sidebar">
+                <h2 class="recommendations_title">LATEST NEWS</h2>
+                {% if recommended_news %}
+                    <div class="recommendations_list">
+                        {% for rec in recommended_news %}
+                            <a href="{% url 'news_page' rec.id %}" class="recommendation_card">
+                                <div class="recommendation_cover">
+                                    <img src="{{ rec.cover.url }}" alt="{{ rec.title }}">
+                                    <div class="recommendation_overlay">
+                                        <span class="recommendation_tag">
+                                            {% if rec.tag == 'boy_group' %}
+                                                BOY GROUP
+                                            {% elif rec.tag == 'girl_group' %}
+                                                GIRL GROUP
+                                            {% elif rec.tag == 'solo' %}
+                                                SOLO
+                                            {% endif %}
+                                        </span>
+                                        <h3 class="recommendation_title">{{ rec.title }}</h3>
+                                        <span class="recommendation_date">{{ rec.date_pub|date:"d/m/Y" }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="no_recommendations">No other news available</p>
+                {% endif %}
+
+            </aside>
+
+        </div>
+
+    </div>
+{% endblock %}

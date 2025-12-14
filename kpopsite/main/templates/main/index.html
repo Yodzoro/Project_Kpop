@@ -1,0 +1,333 @@
+{% extends 'main/layout.html' %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block title %}
+    K-POP+
+{% endblock %}
+
+{% block content %}
+    <div id="content_main_page">
+
+        <!-- SLIDER VIDEO -->
+        <div class="slider">
+
+            <!-- VIDEO 1 -->
+            <div class="main_selected_video active">
+                <div class="main_video">
+                    <div class="video">
+                        <iframe
+                            class="video_frame"
+                            src="https://www.youtube.com/embed/NED7nev2ywQ?controls=0&rel=0&playsinline=1&enablejsapi=1&origin=http://127.0.0.1:8001&autoplay=1&mute=1&loop=1&playlist=NED7nev2ywQ"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="main_banner_text">
+                    <div class="arc_decoration"></div>
+                    <div class="main_last_comeback">
+                        <p>LAST COMEBACK</p>
+                    </div>
+                    <div class="main_title_cb">
+                        <p>STRAY KIDS - DO IT</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=NED7nev2ywQ" class="see_more_btn" target="_blank">SEE MORE</a>
+                </div>
+            </div>
+
+            <!-- VIDEO 2 -->
+            <div class="main_selected_video">
+                <div class="main_video">
+                    <div class="video">
+                        <iframe
+                            class="video_frame"
+                            src="https://www.youtube.com/embed/xGhaNqnjgr4?controls=0&rel=0&playsinline=1&enablejsapi=1&origin=http://127.0.0.1:8000&autoplay=1&mute=1&loop=1&playlist=xGhaNqnjgr4"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="main_banner_text">
+                    <div class="arc_decoration"></div>
+                    <div class="main_last_comeback">
+                        <p>LAST COMEBACK</p>
+                    </div>
+                    <div class="main_title_cb">
+                        <p>TAEYEON - Panorama</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=xGhaNqnjgr4" class="see_more_btn" target="_blank">SEE MORE</a>
+                </div>
+            </div>
+
+            <!-- VIDEO 3 -->
+            <div class="main_selected_video">
+                <div class="main_video">
+                    <div class="video">
+                        <iframe
+                                class="video_frame"
+                                src="https://www.youtube.com/embed/TCObtCLI35M?controls=0&rel=0&playsinline=1&enablejsapi=1&origin=http://127.0.0.1:8000&autoplay=1&mute=1&loop=1&playlist=TCObtCLI35M"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="main_banner_text">
+                     <div class="arc_decoration"></div>
+                    <div class="main_last_comeback">
+                        <p>LAST COMEBACK</p>
+                    </div>
+                    <div class="main_title_cb">
+                        <p>THE BOYZ - Still Love You</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=TCObtCLI35M" class="see_more_btn" target="_blank">SEE MORE</a>
+                </div>
+            </div>
+
+            <!-- NAVIDATION VIDEO-->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+
+        <!-- NEWS -->
+        <div class="news_section">
+
+            <!-- NEWS TITRE-->
+            <div class="news_index_title">
+                <h2>NEWS</h2>
+            </div>
+
+            <!-- NEWS MAIN-->
+            <div class="news_content">
+                <div class="news_header">
+                    <h3>Keep up to date with the latest news —</h3>
+                </div>
+                <div class="news_grid">
+                    {% if news %}
+                        {% for el in news %}
+                            <div class="news_card">
+                                <div class="news_image_container">
+                                    <img src="{{ el.cover.url }}" alt="{{ el.title }}" class="news_image">
+                                    <div class="news_overlay">
+                                        <span class="news_tag">{{ el.get_tag_display }}</span>
+                                        <h4 class="news_title">{{ el.title }}</h4>
+                                        <p class="news_date">{{ el.date_pub|date:"d/m/Y" }}</p>
+                                    </div>
+                                </div>
+                                <a href="{% url 'news_page' el.id %}" class="news_read_more">Read more ></a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no_news">Pas des actualités :(</p>
+                    {% endif %}
+                </div>
+                <div class="news_footer">
+                    <a href="{% url 'news_home' %}" class="news_see_more_btn">See more ></a>
+                    <span class="news_line"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARTISTS RATING -->
+        <div class="rating_section">
+            <div class="rating_content">
+                <div class="rating_header">
+                    <h3>Artists rating for {{ latest_month }} <span style="font-family: Arial, sans-serif;">{{ latest_year }}</span></h3>
+                </div>
+
+                <!-- RATING MAIN -->
+                <div class="rating_categories_wrapper">
+
+                    <!-- RATING MEN -->
+                    <div class="rating_category">
+                        <div class="rating_category_header">
+                            <h4>BOYS GROUPS</h4>
+                            <span class="rating_line"></span>
+                        </div>
+                        <div class="rating_list">
+                            {% if boys_groups %}
+                                {% for rating in boys_groups %}
+                                    <div class="rating_item">
+                                        <span class="rating_number">{{ forloop.counter }}</span>
+                                        <a href="{% url 'group_info' rating.group.slug %}" class="rating_artist_card">
+                                            <img src="{{ rating.group.photo.url }}" alt="{{ rating.group.name }}" class="rating_artist_photo">
+                                            <div class="rating_artist_info">
+                                                <h5 class="rating_artist_name">{{ rating.group.name }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no_rating">Aucune donnée de rating disponible...</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- RATING GIRLS -->
+                    <div class="rating_category">
+                        <div class="rating_category_header">
+                            <h4>GIRLS GROUPS</h4>
+                            <span class="rating_line"></span>
+                        </div>
+                        <div class="rating_list">
+                            {% if girls_groups %}
+                                {% for rating in girls_groups %}
+                                    <div class="rating_item">
+                                        <span class="rating_number">{{ forloop.counter }}</span>
+                                        <a href="{% url 'group_info' rating.group.slug %}" class="rating_artist_card">
+                                            <img src="{{ rating.group.photo.url }}" alt="{{ rating.group.name }}" class="rating_artist_photo">
+                                            <div class="rating_artist_info">
+                                                <h5 class="rating_artist_name">{{ rating.group.name }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no_rating">Aucune donnée de rating disponible...</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="rating_footer">
+                    <a href="{% url 'rating' %}" class="rating_see_more_btn">See more ></a>
+                    <span class="rating_footer_line"></span>
+                </div>
+            </div>
+
+            <!-- RATING TITRE -->
+            <div class="rating_index_title">
+                <h2>ARTISTS</h2>
+            </div>
+        </div>
+
+        <!-- EVENTS -->
+        <div class="calendar_section">
+
+            <!-- EVENTS TITRE -->
+            <div class="calendar_index_title">
+                <h2>CALENDAR</h2>
+            </div>
+
+            <!-- EVENTS MAIN -->
+            <div class="calendar_events">
+                <div class="calendar_events_header">
+                    <h3>Follow the schedule of your favorite artists</h3>
+                </div>
+
+                <!-- EVENTS FILTRE -->
+                <div class="artist_filter">
+                    <div class="filter_artist_label">Artists</div>
+                    <div class="filter_artist_dropdown">
+                        <button class="artist_dropdown_btn" onclick="toggleArtistDropdown()">
+                            <span id="selected_artist">All artists</span>
+                            <span class="dropdown_arrow">V</span>
+                        </button>
+                        <div class="artist_dropdown_list" id="artistDropdown">
+                            <a onclick="filterArtist(event, 'all', 'All Artists')">All </a>
+                            {% for artist in artists_with_events %}
+                                <a onclick="filterArtist(event, '{{ artist.slug }}', '{{ artist.name }}')">{{ artist.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="events_list">
+                    {% if events %}
+                        {% for event in events %}
+                            <div class="event_item" data-artist-slug="{% if event.group %}{{ event.group.slug }}{% elif event.solo_artist %}{{ event.solo_artist.slug }}{% else %}none{% endif %}" data-date="{{ event.date|date:'Y-m-d' }}">
+                                <div class="event_date_circle {{ event.event_type }}">
+                                    <span class="event_day">{{ event.date.day }}</span>
+                                    <span class="event_month">{{ event.date|date:"b"|upper }}</span>
+                                </div>
+                                <div class="event_details">
+                                    <h4 class="event_title">{{ event.title }}</h4>
+                                    <p class="event_artist">{% if event.group %}{{ event.group.name }}{% elif event.solo_artist %}{{ event.solo_artist.stage_name }}{% else %}Unknown{% endif %}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no_events">Aucun événement à venir...</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- EVENTS CALENDAR -->
+            <div class="calendar_widget">
+                <div class="calendar_controls">
+                    <div class="calendar_month_year">
+                        <button class="month_selector" onclick="toggleMonthDropdown(event)">
+                            <span id="current_month">{{ current_month }}</span>
+                            <span class="dropdown_arrow">V</span>
+                        </button>
+                        <button class="year_selector" onclick="toggleYearDropdown(event)">
+                            <span id="current_year">{{ current_year }}</span>
+                            <span class="dropdown_arrow">V</span>
+                        </button>
+                    </div>
+                    <div class="month_dropdown" id="monthDropdown">
+                        <a href="#" onclick="changeMonth(event, 1, 'January')">January</a>
+                        <a href="#" onclick="changeMonth(event, 2, 'February')">February</a>
+                        <a href="#" onclick="changeMonth(event, 3, 'March')">March</a>
+                        <a href="#" onclick="changeMonth(event, 4, 'April')">April</a>
+                        <a href="#" onclick="changeMonth(event, 5, 'May')">May</a>
+                        <a href="#" onclick="changeMonth(event, 6, 'June')">June</a>
+                        <a href="#" onclick="changeMonth(event, 7, 'July')">July</a>
+                        <a href="#" onclick="changeMonth(event, 8, 'August')">August</a>
+                        <a href="#" onclick="changeMonth(event, 9, 'September')">September</a>
+                        <a href="#" onclick="changeMonth(event, 10, 'October')">October</a>
+                        <a href="#" onclick="changeMonth(event, 11, 'November')">November</a>
+                        <a href="#" onclick="changeMonth(event, 12, 'December')">December</a>
+                    </div>
+                    <div class="year_dropdown" id="yearDropdown">
+                        {% for year in years %}
+                            <a href="#" onclick="changeYear(event, {{ year }})">{{ year }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="calendar_grid">
+                    <div class="calendar_weekdays">
+                        <span>MON</span>
+                        <span>TUE</span>
+                        <span>WED</span>
+                        <span>THU</span>
+                        <span>FRI</span>
+                        <span>SAT</span>
+                        <span>SUN</span>
+                    </div>
+                    <div class="calendar_days" id="calendarDays">
+                        <!-- Les jours du calendrier sont générés via le code dans le calendrier.js -->
+                    </div>
+                </div>
+
+                <!-- EVENTS CALENDAR LEGEND -->
+                <div class="calendar_legend">
+                    <div class="legend_item">
+                        <span class="legend_dot release"></span>
+                        <span>Release</span>
+                    </div>
+                    <div class="legend_item">
+                        <span class="legend_dot event"></span>
+                        <span>Event</span>
+                    </div>
+                    <div class="legend_item">
+                        <span class="legend_dot birthday"></span>
+                        <span>Anniversary</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initialisation des événements pour le calendrier des événements -->
+    <script>
+        eventsData = {{ events_json|safe }};
+        console.log('Loaded events:', eventsData);
+    </script>
+
+{% endblock %}
