@@ -74,6 +74,27 @@
                     <span class="info_label">Members:</span>
                     <span class="info_value">{{ members.count }}</span>
                 </div>
+
+                {% with links=group.social_links.all %}
+                {% if links %}
+                <div class="info_item">
+                    <span class="info_label">Media:</span>
+                    <span class="info_value media_links">
+                        {% for link in links %}
+                        <a href="{{ link.url }}"
+                           class="media_link"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="{{ link.platform.name }}"
+                           data-tooltip="{{ link.platform.name }}">
+                            <span class="media_icon" style="--icon: url('{{ link.platform.icon.url }}')"></span>
+                        </a>
+                        {% endfor %}
+                    </span>
+                </div>
+                {% endif %}
+                {% endwith %}
+
             </div>
         </div>
 
@@ -83,12 +104,21 @@
                 <h2>MEMBERS</h2>
                 <span class="members_line"></span>
             </div>
+            {% if members %}
+            <nav class="members_index" aria-label="Members index">
+                <div class="members_index_list">
+                    {% for member in members %}
+                    <a href="#member-{{ member.pk }}" class="members_index_link">{{ member.stage_name }}</a>
+                    {% endfor %}
+                </div>
+            </nav>
+            {% endif %}
             <div class="members_list">
                 {% if members %}
                     {% for member in members %}
 
                         <!-- MEMBER INFO -->
-                        <div class="member_card {% cycle 'photo-right' 'photo-left' %}">
+                        <div class="member_card {% cycle 'photo-right' 'photo-left' %}" id="member-{{ member.pk }}">
                             <div class="member_photo_container">
                                 <img src="{{ member.photo.url }}" alt="{{ member.stage_name }}" class="member_photo">
                             </div>
@@ -131,6 +161,26 @@
                                     <span class="member_info_label">Zodiac Sign:</span>
                                     <span class="member_info_value">{{ member.zodiac_sign }}</span>
                                 </div>
+
+                                {% with links=member.social_links.all %}
+                                {% if links %}
+                                <div class="member_info_item">
+                                    <span class="member_info_label">Media:</span>
+                                    <span class="member_info_value media_links">
+                                        {% for link in links %}
+                                        <a href="{{ link.url }}"
+                                           class="media_link"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           aria-label="{{ link.platform.name }}"
+                                           data-tooltip="{{ link.platform.name }}">
+                                            <span class="media_icon" style="--icon: url('{{ link.platform.icon.url }}')"></span>
+                                        </a>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
 
                                 {% if member.fun_facts %}
                                 <div class="member_info_item fun_facts">

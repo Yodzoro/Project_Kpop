@@ -125,7 +125,7 @@ def groups_mix(request):
 
     return render(request, 'artists/groupes/groups_mix.html', context)
 
-
+"""
 def group_info(request, slug):
     group = Group.objects.get(slug=slug)
 
@@ -136,7 +136,19 @@ def group_info(request, slug):
         'members': members,
     }
     return render(request, 'artists/groupes/group_info.html', context)
+"""
+def group_info(request, slug):
+    group = get_object_or_404(
+        Group.objects.select_related('company').prefetch_related('social_links__platform'),
+        slug=slug
+    )
+    members = group.members.prefetch_related('social_links__platform')
 
+    context = {
+        'group': group,
+        'members': members,
+    }
+    return render(request, 'artists/groupes/group_info.html', context)
 
 def solo_m(request):
     solo_male = SoloArtist.objects.filter(gender='m').order_by('stage_name')
@@ -201,7 +213,7 @@ def solo_f(request):
 
     return render(request, 'artists/solo/solo_female.html', context)
 
-
+"""
 def solo_info(request, slug):
     artist = SoloArtist.objects.get(slug=slug)
 
@@ -209,7 +221,17 @@ def solo_info(request, slug):
         'artist': artist,
     }
     return render(request, 'artists/solo/solo_info.html', context)
+"""
+def solo_info(request, slug):
+    artist = get_object_or_404(
+        SoloArtist.objects.prefetch_related('social_links__platform'),
+        slug=slug
+    )
 
+    context = {
+        'artist': artist,
+    }
+    return render(request, 'artists/solo/solo_info.html', context)
 
 ##########
 # RATING #

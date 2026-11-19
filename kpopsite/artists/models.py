@@ -1,3 +1,6 @@
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.text import slugify  #au lieu d'id, l'URL affichera le titre (slug) et non les chiffres
 
@@ -7,6 +10,9 @@ def company_logo_path(instance, filename):
     # media/artists/companies/HYBE/hybe_logo.png
     return f'artists/companies/{instance.name}/{filename}'
 
+def social_icon_path(instance, filename):
+    # media/artists/social_icons/weverse.svg
+    return f'artists/social_icons/{filename}'
 
 def group_photo_path(instance, filename):
     # media/artists/boy_groups/BTS/bts_group.png
@@ -88,6 +94,7 @@ class Member(models.Model):
     position = models.CharField(max_length=100)
     unit = models.CharField(max_length=100, blank=True, null=True)
     zodiac_sign = models.CharField(max_length=50)
+    social_links = GenericRelation('SocialLink')
     fun_facts = models.TextField('Faits intéressants')
 
     def save(self, *args, **kwargs):
@@ -133,6 +140,7 @@ class Group(models.Model):
     date_debut = models.DateField('Date de début')
     slogan = models.CharField(max_length=200)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+    social_links = GenericRelation('SocialLink')
     members = models.ManyToManyField(Member, related_name='member_groups')
 
     def save(self, *args, **kwargs):
@@ -172,6 +180,7 @@ class SoloArtist(models.Model):
     date_debut = models.DateField('Date de début')
     fandom_name = models.CharField(max_length=100)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+    social_links = GenericRelation('SocialLink')
     fun_facts = models.TextField('Faits intéressants')
 
     def save(self, *args, **kwargs):
@@ -211,3 +220,38 @@ class MonthlyRating(models.Model):
         verbose_name_plural = 'Rating mensuelles'
         ordering = ['annee', 'mois', 'position']
         unique_together = [['artist_type', 'mois', 'annee', 'group']]
+
+class SocialPlatform(models.Model):
+    name = models.CharField('Nom', max_length=100, unique=True)  # sert aussi de texte pour l'infobulle
+    icon = models.FileField(
+        'Icône (SVG)',
+        upload_to=social_icon_path,
+        validators=[FileExtensionValidator(allowed_extensions=['svg'])],
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Plateforme sociale'
+        verbose_name_plural = 'Plateformes sociales'
+        ordering = ['name']
+
+
+class SocialLink(models.Model):
+    platform = models.ForeignKey(SocialPlatform, on_delete=models.CASCADE, related_name='links')
+    url = models.URLField()
+
+    # A quel objet appartient le lien (Group, Member ou SoloArtist)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return f'{self.content_object} - {self.platform.name}'
+
+    class Meta:
+        verbose_name = 'Lien social'
+        verbose_name_plural = 'Liens sociaux'
+        ordering = ['id']
+        indexes = [models.Index(fields=['content_type', 'object_id'])]

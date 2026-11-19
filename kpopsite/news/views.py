@@ -22,7 +22,7 @@ def news_home(request):
 
     # Filtre par tag
     selected_tag = request.GET.get('tag', None)
-    if selected_tag and selected_tag in ['boy_group', 'girl_group', 'solo']:
+    if selected_tag and selected_tag in ['boy_group', 'girl_group', 'mixed_group', 'solo']:
         news = news.filter(tag=selected_tag)
 
     # Filtre par date (par défaut(nouveau), plus ancien, plus récent)
