@@ -18,6 +18,7 @@ class News(models.Model):
     class Tags(models.TextChoices):
         BOY_GROUP = 'boy_group'
         GIRL_GROUP = 'girl_group'
+        MIXED_GROUP = 'mixed_group'
         SOLO = 'solo'
 
     tag = models.CharField(max_length=20, choices=Tags.choices)

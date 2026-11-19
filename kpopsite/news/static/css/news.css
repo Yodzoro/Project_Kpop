@@ -79,7 +79,7 @@
     padding: 15px;
     color: white;
 }
-
+/*
 .news_grid_container .news_tag {
     font-family: 'Body Text Large Regular', sans-serif;
     font-size: 11px;
@@ -88,7 +88,25 @@
     text-transform: uppercase;
     align-self: flex-start;
     margin-bottom: 8px;
+}*/
+.news_grid_container .news_tag {
+    font-family: 'Body Text Large Regular', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-bottom: 8px;
+
+    padding: 4px 10px;
+    background: #ffffff;   /* запасной цвет, если категории нет */
 }
+
+.news_tag.boy_group  { background: #3b82f6; }
+.news_tag.girl_group { background: #ec4899; }
+.news_tag.mixed_group { background: #7733ff; }
+.news_tag.solo       { background: #ff7a33; }
 
 .news_grid_container .news_title {
     font-family: 'Body Text Large Regular', sans-serif;
@@ -123,6 +141,81 @@
     color: #666666;
     text-align: center;
     padding: 60px 40px;
+}
+
+/* PAGINATION + TOTAL */
+.news_bottom_bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 50px;
+}
+
+/* Пагинация: рамка сверху и снизу */
+.news_pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 0;
+    border-top: 2px solid #111111;
+    border-bottom: 2px solid #111111;
+}
+
+.news_pager_item {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Zalando Sans SemiExpanded', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111111;
+    background-color: white;
+    border: 2px solid #111111;
+    border-radius: 0; /* защита от чужих правил со скруглением */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a.news_pager_item:hover {
+    background-color: #111111;
+    color: white;
+}
+
+.news_pager_item.is_current {
+    background-color: #111111;
+    color: white;
+}
+
+.news_pager_item.is_disabled {
+    color: #aaaaaa;
+    border-color: #cccccc;
+    cursor: default;
+}
+
+/* Общее количество: простой текст без рамки */
+.news_total {
+    font-family: 'Zalando Sans SemiExpanded', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #111111;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .news_bottom_bar {
+        margin-top: 35px;
+    }
+
+    .news_pager_item {
+        min-width: 36px;
+        height: 36px;
+    }
 }
 
 /* FILTRES */
@@ -214,6 +307,12 @@
     padding: 50px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+.news_article iframe {   /* подставь класс блока с текстом статьи */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
 
 .article_title {
     font-family: 'Body Text Large Regular', cursive;
@@ -267,6 +366,10 @@
     color: #ec4899;
 }
 
+.article_tag.mixed_group {
+    color: #7733ff;
+}
+
 .article_tag.solo {
     color: #ff7a33;
 }
@@ -298,6 +401,16 @@
 
 .article_text p:last-child {
     margin-bottom: 0;
+}
+
+.article_text .article_artist_link {
+    color: #e91e63; /* цвет ссылки */
+    font-weight: 600;
+    text-decoration: none !important; /* перебивает text-decoration из main.css */
+}
+
+.article_text .article_artist_link:hover {
+    color: #111111;
 }
 
 /* RECOMENDATIONS */

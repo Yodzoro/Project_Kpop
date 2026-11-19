@@ -457,6 +457,20 @@ body.active .navigation {
     transform: translate(-50%, -50%) scale(1.2);
 }
 
+.video_poster {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.2); /* тот же масштаб, что у .video_frame, чтобы не было скачка при исчезновении */
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.video_poster.hidden {
+    opacity: 0;
+}
+
 .main_banner_text {
     position: absolute;
     bottom: 20px;
@@ -544,39 +558,56 @@ body.active .navigation {
 /* INDEX NEWS */
 .news_section {
     position: relative;
-    width: 100%;
-    padding: 60px 0;
+    width: 90%;
+    padding: 60px 0px;
+    margin: 0 auto; /* Центрирует сам контейнер news_section по горизонтали */
     display: flex;
-    gap: 40px;
+    justify-content: center; /* Центрирует весь блок на экране */
+    align-items: flex-start;
+    gap: 30px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
+/* Колонка NEWS */
 .news_index_title {
     position: relative;
-    width: 10%;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    padding-left: 60px;
+    flex-shrink: 0;
+    width: auto;
+    height: 100%;
 }
 
 .news_index_title h2 {
-    font-family: 'Body Text Large Regular', cursive;
-    font-size: 200px;
-    font-weight: 700;
+    font-family: 'Body Text Large Regular', sans-serif;
+    font-size: clamp(110px, 200px, 200px);
+    font-weight: 600;
+    line-height: 0.8;
     color: #111111;
     margin: 0;
+    padding: 0;
     writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg); /* Текст снизу вверх */
-    letter-spacing: 5px;
+    transform: rotate(180deg) scaleX(0.8);
+    transform-origin: center center;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+    width: max-content;
+    height: max-content;
 }
 
 .news_content {
     flex: 1;
-    padding-right: 40px;
+    /*padding-right: 40px;*/
 }
 
 .news_header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     margin-bottom: 40px;
 }
 
@@ -588,25 +619,27 @@ body.active .navigation {
     margin: 0;
 }
 
+/* Сетка карточек */
 .news_grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    margin-bottom: 40px;
+    gap: 16px;
+    margin: 0;
 }
 
 .news_card {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .news_image_container {
     position: relative;
     width: 100%;
-    padding-bottom: 100%;
+    aspect-ratio: 1 / 1; /* Сохраняет идеальный квадрат */
     overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
 }
 
 .news_image {
@@ -625,46 +658,46 @@ body.active .navigation {
     width: 100%;
     height: 100%;
     background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.6) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.1) 100%
+            to top,
+            rgba(0, 0, 0, 0.75) 0%,
+            rgba(0, 0, 0, 0.4) 50%,
+            rgba(0, 0, 0, 0.05) 100%
     );
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 15px;
+    padding: 10px;
     color: white;
 }
 
 .news_tag {
     font-family: 'Body Text Large Regular', sans-serif;
-    font-size: 11px;
+    font-size: 9px;
     color: white;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     align-self: flex-start;
+    margin-bottom: 3px;
 }
 
 .news_title {
     font-family: 'Body Text Large Regular', sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     color: white;
-    margin: 0;
-    line-height: 1.3;
+    margin: 0 0 2px 0;
+    line-height: 1.25;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .news_date {
-    font-size: 12px;
-    color: white;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.9);
     margin: 0;
-    opacity: 0.9;
 }
 
 .news_read_more {
@@ -721,34 +754,50 @@ body.active .navigation {
 /* INDEX ARTISTS RATING */
 .rating_section {
     position: relative;
-    width: 100%;
-    padding: 60px 0;
+    width: 90%;
+    margin: 0 auto;
+    padding: 60px 0px;
     display: flex;
-    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .rating_content {
     flex: 1;
-    padding-left: 40px;
 }
 
 .rating_index_title {
     position: relative;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    padding-right: 20px;
+    flex-shrink: 0;
+    width: auto;
+    height: 100%;
+    padding-top: 10px;
 }
 
 .rating_index_title h2 {
     font-family: 'Body Text Large Regular', sans-serif;
-    font-size: 149px;
+    font-size: clamp(110px, 16vh, 160px);
     font-weight: 700;
+    line-height: 0.8;
     color: #111111;
     margin: 0;
+    padding: 0;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    letter-spacing: 5px;
+    transform: scaleX(0.8);
+    transform-origin: center center;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+    width: max-content;
+    height: max-content;
 }
 
 .rating_header {
@@ -885,34 +934,48 @@ body.active .navigation {
 /* INDEX EVENTS */
 .calendar_section {
     position: relative;
-    width: 100%;
-    padding: 60px 0;
+    width: 90%;
+    margin: 0 auto;
+    padding: 60px 0px;
     display: flex;
-    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .calendar_index_title {
     position: relative;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    padding-left: 50px;
+    flex-shrink: 0;
+    width: auto;
+    height: 100%;
 }
 
 .calendar_index_title h2 {
-    font-family: 'Body Text Large Regular', cursive;
-    font-size: 80px;
+    font-family: 'Body Text Large Regular', sans-serif;
+    font-size: clamp(110px, 140px, 200px);
     font-weight: 700;
+    line-height: 0.8;
     color: #111111;
     margin: 0;
+    padding: 0;
     writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    letter-spacing: 5px;
+    transform: rotate(180deg) scaleX(0.8);
+    transform-origin: center center;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+    width: max-content;
+    height: max-content;
 }
 
 .calendar_events {
     flex: 1;
-    padding-left: 10px;
 }
 
 .calendar_events_header h3 {
@@ -1013,6 +1076,7 @@ body.active .navigation {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    background: white;
 }
 
 .event_date_circle.release {
@@ -1124,7 +1188,6 @@ body.active .navigation {
 
 .calendar_widget {
     flex: 1;
-    padding-right: 50px;
 }
 
 .calendar_controls {
@@ -1148,6 +1211,7 @@ body.active .navigation {
     align-items: center;
     gap: 10px;
 }
+
 .month_selector {
     flex: 2;
     font-family: 'Body Text Large Regular', cursive;
@@ -1356,6 +1420,19 @@ body.active .navigation {
     gap: 60px;
     max-width: 1400px;
     margin: 0 auto 40px;
+}
+
+.footer_disclaimer {
+    max-width: 800px;
+    margin: 25px auto 10px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.footer_disclaimer p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.65; /* делает текст слегка приглушенным */
 }
 
 .footer_social {

@@ -38,11 +38,13 @@
                                 <div class="news_cover_container">
                                     <img src="{{ article.cover.url }}" alt="{{ article.title }}" class="news_cover">
                                     <div class="news_overlay">
-                                        <span class="news_tag">
+                                        <span class="news_tag {{ article.tag }}">
                                             {% if article.tag == 'boy_group' %}
                                                 BOY GROUP
                                             {% elif article.tag == 'girl_group' %}
                                                 GIRL GROUP
+                                            {% elif article.tag == 'mixed_group' %}
+                                                MIXED GROUP
                                             {% elif article.tag == 'solo' %}
                                                 SOLO
                                             {% endif %}
@@ -53,6 +55,18 @@
                                 </div>
                             </a>
                         {% endfor %}
+                    </div>
+                    <!-- PAGINATION + TOTAL -->
+                    <div class="news_bottom_bar">
+                        <nav class="news_pager" aria-label="Pagination">
+                            <span class="news_pager_item is_disabled" aria-disabled="true">&lt;</span>
+                            <span class="news_pager_item is_current" aria-current="page">1</span>
+                            <span class="news_pager_item is_disabled" aria-disabled="true">&gt;</span>
+                        </nav>
+
+                        {% with total=news|length %}
+                        <p class="news_total">{{ total }} article{{ total|pluralize }}</p>
+                        {% endwith %}
                     </div>
                 {% else %}
                     <p class="no_news">Pour l'instant, il n'y a pas d'actualités... Attendez qu'elles soient ajoutées ! :)</p>
@@ -78,6 +92,10 @@
                         <a href="?tag=girl_group{% if sort_order %}&sort={{ sort_order }}{% endif %}"
                            class="filter_option {% if selected_tag == 'girl_group' %}active{% endif %}">
                             Girl Groups
+                        </a>
+                        <a href="?tag=mixed_group{% if sort_order %}&sort={{ sort_order }}{% endif %}"
+                           class="filter_option {% if selected_tag == 'mixed_group' %}active{% endif %}">
+                            Mixed Groups
                         </a>
                         <a href="?tag=solo{% if sort_order %}&sort={{ sort_order }}{% endif %}"
                            class="filter_option {% if selected_tag == 'solo' %}active{% endif %}">

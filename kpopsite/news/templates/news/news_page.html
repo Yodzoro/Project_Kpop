@@ -1,4 +1,5 @@
 {% extends 'main/layout.html' %}
+{% load artist_tags %}
 
 {% block title %}
    {{ article.title }} | K-POP+
@@ -42,6 +43,8 @@
                             BOY GROUP
                         {% elif article.tag == 'girl_group' %}
                             GIRL GROUP
+                        {% elif article.tag == 'mixed_group' %}
+                            MIXED GROUP
                         {% elif article.tag == 'solo' %}
                             SOLO
                         {% endif %}
@@ -51,7 +54,7 @@
                     <img src="{{ article.cover.url }}" alt="{{ article.title }}" class="article_cover">
                 </div>
                 <div class="article_text">
-                    {{ article.full_text|linebreaks }}
+                    {{ article.full_text|safe|artist_links|linebreaks }}
                 </div>
             </article>
 
@@ -70,6 +73,8 @@
                                                 BOY GROUP
                                             {% elif rec.tag == 'girl_group' %}
                                                 GIRL GROUP
+                                            {% elif rec.tag == 'mixed_group' %}
+                                                MIXED GROUP
                                             {% elif rec.tag == 'solo' %}
                                                 SOLO
                                             {% endif %}
